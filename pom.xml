@@ -54,7 +54,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M4</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>${defaultValueOfSkip}</skipTests>
                 </configuration>
             </plugin>
 

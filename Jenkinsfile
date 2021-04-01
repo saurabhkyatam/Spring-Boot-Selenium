@@ -13,7 +13,7 @@ pipeline {
         {
             steps {
                 // Get some code from a GitHub repository
-              bat "mvn install"
+              bat "mvn install -DdefaultValueOfSkip=true"
                
                
             }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 
                 bat "mvn test"
-                bat "mvn package"
+                bat "mvn package -DdefaultValueOfSkip=true"
             }
            
         }
