@@ -39,7 +39,7 @@ pipeline {
     }
     post{
         success {
-                    //junit '**/target/surefire-reports/TEST-*.xml'
+                    junit 'target/surefire-reports/TEST-me.arndc.example.testing.automation.SeleniumTest.xml'
                     archiveArtifacts 'target/selenium-thymeleaf-0.0.1-SNAPSHOT.jar'
                 }
     }
