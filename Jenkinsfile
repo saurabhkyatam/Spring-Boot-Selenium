@@ -32,6 +32,13 @@ pipeline {
             steps {
                 
                 bat "mvn test"
+            }
+           
+        }
+        stage('Build jar ')
+        {
+            steps {
+                
                 bat "mvn package -DdefaultValueOfSkip=true"
             }
            
