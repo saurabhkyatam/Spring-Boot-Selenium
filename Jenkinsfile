@@ -7,19 +7,13 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps
-            {
-                checkout scm
-            }
-            
-        }
+        
 
         stage('Build Stage')
         {
             steps {
                 // Get some code from a GitHub repository
-              bat "mavn install"
+              bat "mvn install"
                
                
             }
