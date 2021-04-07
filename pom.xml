@@ -40,6 +40,7 @@
     </dependencies>
 
     <build>
+        <finalName>Spring-selenium </finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -1,25 +1,34 @@
 pipeline {
     agent any
 
+    
+    environment {
+        //once you sign up for Docker hub, use that user_id here
+        registry = "sau7276docker/spring_selenium"
+        //- update your credentials ID after creating credentials for connecting to Docker Hub
+        //registryCredential = 'fa32f95a-2d3e-4c7b-8f34-11bcc0191d70'
+        dockerImage = ''
+    }
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "maven_3_6_3"
     }
 
+
     stages {
         
 
-        stage('Build Stage')
+        stage('Build & clean Stage')
         {
             steps {
                 // Get some code from a GitHub repository
-              bat "mvn install -DdefaultValueOfSkip=true"
-               
+              //bat "mvn install -DdefaultValueOfSkip=true"
+                bat "mvn clean compile"
                
             }
            
         }
-        stage('Compile Stage')
+        /*stage('Compile Stage')
         {
             steps {
               
@@ -34,7 +43,7 @@ pipeline {
                 bat "mvn test"
             }
            
-        }
+        }*/
         stage('Build jar ')
         {
             steps {
@@ -43,10 +52,17 @@ pipeline {
             }
            
         }
+        stage('Building image') {
+            steps{
+                script {
+                    dockerImage = docker.build registry
+                }
+            }
+        }
     }
     post{
         success {
-                    junit 'target/surefire-reports/TEST-me.arndc.example.testing.automation.SeleniumTest.xml'
+                    //junit 'target/surefire-reports/TEST-me.arndc.example.testing.automation.SeleniumTest.xml'
                     archiveArtifacts 'target/selenium-thymeleaf-0.0.1-SNAPSHOT.jar'
                 }
     }
