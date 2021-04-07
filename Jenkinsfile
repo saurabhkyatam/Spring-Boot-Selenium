@@ -6,7 +6,7 @@ pipeline {
         //once you sign up for Docker hub, use that user_id here
         registry = "sau7276docker/spring_selenium"
         //- update your credentials ID after creating credentials for connecting to Docker Hub
-        //registryCredential = 'fa32f95a-2d3e-4c7b-8f34-11bcc0191d70'
+        registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
     tools {
@@ -59,6 +59,16 @@ pipeline {
                 }
             }
         }
+        stage('Upload Image') {
+            steps{    
+                 script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                }
+            }
+        }
+    }
+
     }
     post{
         success {
