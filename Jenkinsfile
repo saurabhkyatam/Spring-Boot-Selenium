@@ -1,79 +1,33 @@
 pipeline {
     agent any
 
-    
-    environment {
-        //once you sign up for Docker hub, use that user_id here
-        registry = "sau7276docker/spring_selenium"
-        //- update your credentials ID after creating credentials for connecting to Docker Hub
-        registryCredential = 'dockerhub_id'
-        dockerImage = ''
-    }
-    tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "maven_3_6_3"
-    }
-
-
     stages {
-        
-
-        stage('Build & clean Stage')
-        {
+        stage('Ckeckout') {
             steps {
-                // Get some code from a GitHub repository
-              //bat "mvn install -DdefaultValueOfSkip=true"
-                bat "mvn clean compile"
-               
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/saurabhkyatam/Spring-Boot-Selenium.git']]])
             }
-           
         }
-        /*stage('Compile Stage')
+        stage('Build  ')
         {
             steps {
-              
-                 bat "mvn clean compile"
-            }
-           
-        }
-        stage('Testing Stage')
-        {
-            steps {
-                
-                bat "mvn test"
-            }
-           
-        }*/
-        stage('Build jar ')
-        {
-            steps {
-                
+                bat "mvn clean"
                 bat "mvn package -DdefaultValueOfSkip=true"
             }
            
         }
-        stage('Building image') {
+        stage('backup war')
+        {
             steps{
-                script {
-                    dockerImage = docker.build registry
-                }
+               echo 'backup'
+               bat 'copy /Y H:\\Tomcat\\webapps\\Spring-selenium.war  H:\\backupwar  '
+              }
+        }
+        stage('deploy')
+        {
+            steps{
+                echo 'deploy'
+                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://localhost:8090')], contextPath: null, war: 'target/*.war'
             }
         }
-        stage('Upload Image') {
-            steps{    
-                 script {
-                    docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                }
-            }
-        }
-    }
-
-    }
-    post{
-        success {
-                    //junit 'target/surefire-reports/TEST-me.arndc.example.testing.automation.SeleniumTest.xml'
-                    archiveArtifacts 'target/Spring-selenium.jar'
-                }
     }
 }
