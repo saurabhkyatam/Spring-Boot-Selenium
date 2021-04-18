@@ -22,6 +22,20 @@ pipeline {
         {
             steps{
                 echo 'deploy'
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'selenium-thymeleaf', 
+                        classifier: '', 
+                        file: 'target/*.war',
+                        type: 'war']
+                     ], 
+                    credentialsId: 'nexus', 
+                    groupId: 'me.arndc.example.testing',
+                    nexusUrl: 'localhost:8081',
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'simpleapp',
+                    version: '0.0.1'
                 //deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://localhost:8090')], contextPath: null, war: 'target/*.war'
             }
         }
