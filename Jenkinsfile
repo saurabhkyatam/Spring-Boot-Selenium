@@ -36,6 +36,7 @@ pipeline {
               }
             }
           }
+          /*
         stage('deploy')
         {
             environment {
@@ -91,6 +92,6 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
     }
 }
