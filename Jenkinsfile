@@ -26,7 +26,7 @@ pipeline {
                     [
                         artifactId: 'selenium-thymeleaf', 
                         classifier: '', 
-                        file: 'target/*.war',
+                        file: 'target/Spring-selenium.war',
                         type: 'war']
                      ], 
                     credentialsId: 'nexus', 
