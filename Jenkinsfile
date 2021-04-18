@@ -2,16 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Ckeckout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/saurabhkyatam/Spring-Boot-Selenium.git']]])
-            }
-        }
-        stage('Build  ')
+        
+        stage('Build Package ')
         {
             steps {
-                bat "mvn clean"
-                bat "mvn package -DdefaultValueOfSkip=true"
+                bat 'mvn clean'
+                bat 'mvn package -DdefaultValueOfSkip=true'
             }
            
         }
@@ -26,7 +22,7 @@ pipeline {
         {
             steps{
                 echo 'deploy'
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://localhost:8090')], contextPath: null, war: 'target/*.war'
+                //deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://localhost:8090')], contextPath: null, war: 'target/*.war'
             }
         }
     }
