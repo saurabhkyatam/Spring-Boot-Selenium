@@ -18,6 +18,24 @@ pipeline {
                bat 'copy /Y H:\\Tomcat\\webapps\\Spring-selenium.war  H:\\backupwar  '
               }
         }
+        stage("sonar" )
+        {
+            //agent { label 'Slave1' }
+            
+            steps{
+                withSonarQubeEnv('SonarQube') {
+                     bat "mvn clean install sonar:sonar "
+                 }
+                //bat "mvn clean install sonar:sonar -Dsonar.login=990d23d78c7a8f006fa4c5c48f3dacfcf224034f"
+            }
+        }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
         stage('deploy')
         {
             environment {
