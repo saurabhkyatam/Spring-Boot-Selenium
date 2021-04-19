@@ -37,8 +37,8 @@ pipeline {
               }
             }
           }
-          /*
-        stage('deploy')
+          
+        stage('deploy to nexus')
         {
             environment {
                 // This can be nexus3 or nexus2
@@ -93,6 +93,6 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
     }
 }
