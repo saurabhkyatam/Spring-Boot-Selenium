@@ -8,6 +8,7 @@ public class ThymeleafApplication {
 
     public static void main(String[] args) {
 		int demo =0;
+		String data="";
         SpringApplication.run(ThymeleafApplication.class, args);
         System.out.println("hello world");
 		
